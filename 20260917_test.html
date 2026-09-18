@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.alert("경고장");
+        console.log("콘솔로그-0 태스트 ㄹ12 눌러 console 창에서 확인");
+        var 변수 = window.confirm("질문내용");
+        x = window.confirm("질문-확인/취소");
+        true / false
+        console.log(x);
+         변수명 각종이름은 예약어는 사용불가(외워라) 뛰어쓰기 불가 특수문자 불가 (_)=가능
+         var 변수= window.prompt("메세지입력-확인/취소");
+         var v1= document.getElementById("id01");
+         var v2= document.getElementsByName("p");
+         메세지 / null
+         console.log(v1);
+         console.log(v2);
+         console.log("콘솔로그-2 태스트 F12 눌러 console 창에서 확인");
+    </script>
+
+</head>
+
+<body>
+    <p> id="id01".안녕 </p>
+    <p> id="id01".안녕2 </p>
+    <script>
+        var v1 = document.getElementById("id01");
+        console.log(v1);
+        var v2 = document.getElementsByName("p");
+        console.log(v2);
+        document.getElementsByClassName("c1");
+        document.getSelection("p"); //선택자 //
+        console.log("콘솔로그-2 태스트 F12 눌러 console 창에서 확인");
+
+
+        //문자열 함수들
+        v3 = "123"
+        console.log(v3 + 5)
+        console.log(v3 + "5")
+        console.log(v3 * 5)
+        console.log(Number(v3) + 5)
+        console.log(parseInt("1.35"))
+        v4 = 123
+        console.log(v4 + 5)
+        console.log(v4 + "5")
+        console.log(v4 + 5)
+        console.log(String(v4) + 5)
+        console.log(5%3)  //2
+        console.log(5/3)  //1
+        console.log(++5)
+        console.log(--5)
+        v4=53
+        if (v4 > 100){
+            console.log("100 보다 커요")
+        } else{
+           console.log("100 보다 크지 않아요")
+        }
+        if (v4 > 100) {
+            console.log("100 보다 커요")
+        } else if (v4< 50){
+           console.log("100 보다 크지 않아요")
+        } else {
+            console.log("50 같거나 크고 100 보다 작아요")
+        }
+        
+        str_length = "abc,defgh,ij"
+        console.log(str_length.length);
+        console.log(str_length.split(",c"));
+        //str_length.substring(2,4) 결과물""
+        console.log(str_length.substring(2,4));
+        console.log(str_length.split(",",1));
+        console.log(str_length.substring(2))
+
+        // 숫자 number 함수(메소드)들
+        Math.max([2,6,3,9,4])
+        console.log(Math.max(2,6,3,9,4));
+        console.log(Math.min(2,6,3,9,4));
+        console.log(Math.abs(-0.34));
+        //메소드의 파라메타를 넣을수 있다 자료형
+
+    </script>
+
+</body>
+<script>
+    console.log("콘솔로그-2 태스트 F12 눌러 console 창에서 확인");
+</script>
+
+</html>

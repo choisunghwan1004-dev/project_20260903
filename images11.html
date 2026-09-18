@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울 청년 인구 데이터 뉴스</title>
+    <style>
+        :root {
+            --brand: #2563eb;
+            --ink: #111827;
+            --muted: #9db41d;
+            --line: #0fae94;
+            --bg: #f8fafc;
+            --card: #0dccb3;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--bg);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: min(1080px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--line);
+            padding: 18px 0;
+        }
+
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--brand);
+        }
+
+        .source {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* 기사 제목 */
+        .article-header {
+            padding: 60px 0 30px;
+        }
+
+        .category {
+            color: var(--brand);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.25;
+            letter-spacing: -0.04em;
+        }
+
+        .lead {
+            margin-top: 20px;
+            color: #374151;
+            font-size: 1.15rem;
+        }
+
+        .date {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* 핵심 숫자 */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .metric {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric h2 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--muted);
+        }
+
+        .metric strong {
+            display: block;
+            margin: 8px 0;
+            font-size: 2rem;
+            color: var(--brand);
+        }
+
+        .metric p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .metric.decrease strong {
+            color: var(--danger);
+        }
+
+        /* 기사 */
+        article {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid var(--line);
+        }
+
+        article h2 {
+            margin-top: 0;
+        }
+
+        article p {
+            color: #374151;
+        }
+
+        /* 그래프 */
+        .chart-section {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .chart-section h2 {
+            margin-top: 0;
+        }
+
+        .chart {
+            position: relative;
+            height: 360px;
+            margin-top: 30px;
+            border-left: 2px solid #9ca3af;
+            border-bottom: 2px solid #9ca3af;
+            padding: 20px 20px 0 55px;
+        }
+
+        .grid-line {
+            position: absolute;
+            left: 55px;
+            right: 20px;
+            border-top: 1px dashed #d1d5db;
+        }
+
+        .line-1 {
+            top: 55px;
+        }
+
+        .line-2 {
+            top: 125px;
+        }
+
+        .line-3 {
+            top: 195px;
+        }
+
+        .line-4 {
+            top: 265px;
+        }
+
+        .y-label {
+            position: absolute;
+            left: 0;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .y1 {
+            top: 45px;
+        }
+
+        .y2 {
+            top: 115px;
+        }
+
+        .y3 {
+            top: 185px;
+        }
+
+        .y4 {
+            top: 255px;
+        }
+
+        .points {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .point-group {
+            position: relative;
+            width: 30%;
+            height: 100%;
+        }
+
+        .point {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--brand);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .p2024 {
+            top: 50px;
+        }
+
+        .p2025 {
+            top: 120px;
+        }
+
+        .p2026 {
+            top: 190px;
+        }
+
+        .connector {
+            position: absolute;
+            height: 4px;
+            background: var(--brand);
+            transform-origin: left center;
+            z-index: 2;
+        }
+
+        .connector.one {
+            width: 170px;
+            left: 50%;
+            top: 66px;
+            transform: rotate(14deg);
+        }
+
+        .connector.two {
+            width: 170px;
+            left: 50%;
+            top: 136px;
+            transform: rotate(14deg);
+        }
+
+        .point-label {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .point-label strong {
+            display: block;
+            font-size: 1.15rem;
+        }
+
+        .point-label span {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .year-label {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+        }
+
+        /* 발견 */
+        .discoveries {
+            background: #eff6ff;
+            border-radius: 18px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .discoveries h2 {
+            margin-top: 0;
+        }
+
+        .discoveries li {
+            margin: 8px 0;
+        }
+
+        /* 표 */
+        .table-wrap {
+            overflow-x: auto;
+            background: white;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+        }
+
+        th {
+            background: #f9fafb;
+        }
+
+        tr:last-child th,
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .negative {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        /* 출처 */
+        .source-box {
+            padding: 25px 0 50px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .source-box a {
+            color: var(--brand);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* 모바일 */
+        @media (max-width: 720px) {
+            .container {
+                width: min(100% - 20px, 1080px);
+            }
+
+            .site-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .article-header {
+                padding: 40px 0 20px;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .metric strong {
+                font-size: 1.7rem;
+            }
+
+            article,
+            .chart-section,
+            .discoveries {
+                padding: 22px;
+            }
+
+            .chart {
+                height: 300px;
+                padding-left: 45px;
+            }
+
+            .grid-line {
+                left: 45px;
+            }
+
+            .connector {
+                width: 100px !important;
+            }
+        }
+    </style>
+</head>
+
+<body> <!-- 헤더 -->
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">서울 데이터 뉴스</div>
+            <div class="source">인구 데이터 분석</div>
+        </div>
+    </header>
+    <main class="container"> <!-- 기사 제목 -->
+        <header class="article-header">
+            <div class="category">서울 인구 데이터</div>
+            <h1> 서울 청년 인구,<br> 3년 새 12만 명 감소 </h1>
+            <p class="lead"> 2024년 241만 명이었던 서울 청년 인구가 2026년 229만 명으로 줄었습니다. </p>
+            <div class="date"> 자료: 국가통계포털 · 2024~2026년 </div>
+        </header> <!-- 핵심 지표 -->
+        <section class="metrics" aria-label="핵심 지표">
+            <div class="metric">
+                <h2>2024년</h2> <strong>241만 명</strong>
+                <p>서울 청년 인구</p>
+            </div>
+            <div class="metric">
+                <h2>2025년</h2> <strong>235만 명</strong>
+                <p>전년 대비 -2.5%</p>
+            </div>
+            <div class="metric decrease">
+                <h2>2026년</h2> <strong>229만 명</strong>
+                <p>전년 대비 -2.6%</p>
+            </div>
+        </section> <!-- 기사 -->
+        <article>
+            <h2>청년 인구 감소세 이어져</h2>
+            <p> 서울 청년 인구가 지속적으로 감소하고 있습니다. 2024년 241만 명에서 2025년 235만 명, 2026년에는 229만 명으로 감소했습니다. </p>
+            <p> 3년 사이 약 12만 명이 줄어든 것으로, 2024년과 비교하면 약 5.0% 감소한 수준입니다. </p>
+        </article> <!-- 그래프 -->
+        <section class="chart-section" aria-labelledby="chart-title">
+            <h2 id="chart-title">2024 → 2026년 청년 인구 변화</h2>
+            <p> 서울 청년 인구가 해마다 감소하는 흐름을 보여줍니다. </p>
+            <div class="chart"> <!-- 가로 기준선 -->
+                <div class="grid-line line-1"></div>
+                <div class="grid-line line-2"></div>
+                <div class="grid-line line-3"></div>
+                <div class="grid-line line-4"></div> <!-- Y축 숫자 --> <span class="y-label y1">241만</span> <span
+                    class="y-label y2">237만</span> <span class="y-label y3">233만</span> <span
+                    class="y-label y4">229만</span>
+                <div class="points"> <!-- 2024 -->
+                    <div class="point-group">
+                        <div class="point-label" style="top:10px;"> <strong>241만</strong> <span>시작</span> </div>
+                        <div class="point p2024"></div>
+                        <div class="year-label"> 2024 </div>
+                    </div> <!-- 연결선 -->
+                    <div class="connector one"></div> <!-- 2025 -->
+                    <div class="point-group">
+                        <div class="point-label" style="top:80px;"> <strong>235만</strong> <span>-2.5%</span> </div>
+                        <div class="point p2025"></div>
+                        <div class="year-label"> 2025 </div>
+                    </div> <!-- 연결선 -->
+                    <div class="connector two"></div> <!-- 2026 -->
+                    <div class="point-group">
+                        <div class="point-label" style="top:150px;"> <strong>229만</strong> <span>-2.6%</span> </div>
+                        <div class="point p2026"></div>
+                        <div class="year-label"> 2026 </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- 핵심 발견 -->
+        <section class="discoveries">
+            <h2>핵심 발견</h2>
+            <ul>
+                <li>2024년 241만 명 → 2026년 229만 명</li>
+                <li>3년 동안 약 12만 명 감소</li>
+                <li>2024년 대비 약 5.0% 감소</li>
+                <li>2025년과 2026년 모두 감소세 지속</li>
+            </ul>
+        </section> <!-- 데이터 표 -->
+        <section>
+            <h2>연도별 데이터</h2>
+            <div class="table-wrap">
+                <table>
+                    <caption class="visually-hidden"> 2024년부터 2026년까지 서울 청년 인구 </caption>
+                    <thead>
+                        <tr>
+                            <th>연도</th>
+                            <th>청년 인구</th>
+                            <th>전년 대비 증감률</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>2024</th>
+                            <td>2,410,000명</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <th>2025</th>
+                            <td>2,350,000명</td>
+                            <td class="negative">-2.5%</td>
+                        </tr>
+                        <tr>
+                            <th>2026</th>
+                            <td>2,290,000명</td>
+                            <td class="negative">-2.6%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section> <!-- 출처 -->
+        <footer class="source-box"> <strong>자료 출처</strong><br> 국가통계포털(KOSIS) 데이터를 기반으로 작성한 예시 데이터 페이지입니다. <br><br> <a
+                href="https://kosis.kr" target="_blank" rel="noopener"> 국가통계포털 원자료 확인 → </a> </footer>
+    </main>
+</body>
+
+</html>
